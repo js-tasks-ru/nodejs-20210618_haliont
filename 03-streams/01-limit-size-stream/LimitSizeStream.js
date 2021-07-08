@@ -6,14 +6,12 @@ class LimitSizeStream extends stream.Transform {
     super(options);
 
     this.limit = options.limit;
-    this.chunks = [];
+    this.totalBytesLength = 0;
   }
 
   _transform(chunk, encoding, callback) {
-    this.chunks.push(chunk);
-    const chunksByteLength = Buffer.concat(this.chunks).byteLength;
-
-    const isLimitExceeded = chunksByteLength > this.limit;
+    this.totalBytesLength += chunk.byteLength;
+    const isLimitExceeded = this.totalBytesLength > this.limit;
 
     if (isLimitExceeded) {
       callback(new LimitExceededError());
