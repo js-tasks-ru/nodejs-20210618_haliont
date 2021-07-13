@@ -83,11 +83,11 @@ describe('streams/line-split-stream', () => {
       lines.on('data', onData);
       lines.on('end', () => {
         expect(onData.firstCall.args[0]).to.equal('a');
-        clearTimeout(timeout);
+        clearTimeout(timeout)
         done();
       });
 
-      lines.write(`a${os.EOL}`);
-    });
+      lines.write(`a${os.EOL}`)
+    })
   });
 });
